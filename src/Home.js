@@ -1,19 +1,22 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Text, View } from "react-native";
+import tailwind from "tailwind-rn";
+import axios from "axios";
 
 export default function Home() {
+  const [data, setData] = useState({});
+  useEffect(() => {
+    axios
+      .get("https://www.hpb.health.gov.lk/api/get-current-statistical")
+      .then((response) => {
+        setData({ ...response.data.data });
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
   return (
-    <View style={styles.container}>
-      <Text>Home.js</Text>
+    <View style={tailwind("items-center justify-center")}>
+      <Text style={{ fontFamily: "PoppinsBlack", fontSize: 60 }}>Home.js</Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
