@@ -87,6 +87,7 @@ function App() {
                 Home
               </Text>
             ),
+            headerTitleAlign: "center",
             headerLeft: () => <AboutButton />,
           }}
         />
@@ -95,6 +96,7 @@ function App() {
           name="About"
           options={{
             headerLeft: () => <BackButton />,
+            headerTitleAlign: "center",
             headerTitle: () => (
               <Text style={{ fontFamily: "PoppinsRegular", fontSize: 18 }}>
                 About
