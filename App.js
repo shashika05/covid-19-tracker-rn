@@ -72,7 +72,6 @@ function App() {
   });
 
   if (!loaded) {
-    console.log(error);
     return null;
   }
   return (
@@ -83,8 +82,8 @@ function App() {
           name="Home"
           options={{
             headerTitle: () => (
-              <Text style={{ fontFamily: "PoppinsRegular", fontSize: 18 }}>
-                Home
+              <Text style={{ fontFamily: "PoppinsMedium", fontSize: 18 }}>
+                🦠 Covid-19 Tracker 🦠
               </Text>
             ),
             headerTitleAlign: "center",
@@ -98,7 +97,7 @@ function App() {
             headerLeft: () => <BackButton />,
             headerTitleAlign: "center",
             headerTitle: () => (
-              <Text style={{ fontFamily: "PoppinsRegular", fontSize: 18 }}>
+              <Text style={{ fontFamily: "PoppinsMedium", fontSize: 18 }}>
                 About
               </Text>
             ),

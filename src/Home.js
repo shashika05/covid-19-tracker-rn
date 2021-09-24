@@ -3,6 +3,9 @@ import { Text, TouchableOpacity, View, Animated } from "react-native";
 import tailwind from "tailwind-rn";
 import axios from "axios";
 
+import DailyCases from "./components/Home/DailyCases";
+import TotalCases from "./components/Home/TotalCases";
+
 export default function Home() {
   const [dataFromApi, setData] = useState({});
   const [localData, setLocalData] = useState({});
@@ -10,25 +13,41 @@ export default function Home() {
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
-  function aniFadeIn() {
+  const fadeOut = () => {
+    // Will change fadeAnim value to 0 in 3 seconds
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 3000,
+      useNativeDriver: true,
+    }).start(() => setDailyCasesToggle(!dailyCasesToggle));
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 3000,
+      useNativeDriver: true,
+    }).start();
+  };
+  const fadeIn = () => {
+    // Will change fadeAnim value to 0 in 3 seconds
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 5000,
       useNativeDriver: true,
     }).start();
-  }
+  };
 
   function dailyCasePress() {
-    setDailyCasesToggle(true);
+    // setDailyCasesToggle(true);
 
     // Animation
-    aniFadeIn();
+    fadeOut();
+    // fadeIn();
   }
   function totalCasePress() {
-    setDailyCasesToggle(false);
+    // setDailyCasesToggle(false);
 
     // Animation
-    aniFadeIn();
+    fadeOut();
+    // fadeIn();
   }
 
   useEffect(() => {
@@ -38,14 +57,14 @@ export default function Home() {
         setLocalData({ ...res.data.data[0] });
         // console.log(localData);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log("localData Error: ", err));
     axios
       .get("https://www.hpb.health.gov.lk/api/get-current-statistical")
       .then((response) => {
         setData({ ...response.data.data });
         // console.log(dataFromApi);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log("dataFromApi Error: ", err));
   }, []);
   return (
     <View style={tailwind("items-center justify-center")}>
@@ -89,49 +108,10 @@ export default function Home() {
           { opacity: fadeAnim },
         ]}
       >
-        {dailyCasesToggle && (
-          <View style={tailwind("items-center justify-center")}>
-            <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
-              New Cases
-            </Text>
-            <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
-              {localData.cases_count}
-            </Text>
-            <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
-              Deaths
-            </Text>
-            <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
-              {localData.deaths_count}
-            </Text>
-            <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
-              Recoverd
-            </Text>
-            <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
-              {localData.recoveries_count}
-            </Text>
-          </View>
-        )}
-        {!dailyCasesToggle && (
-          <View style={tailwind("items-center justify-center")}>
-            <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
-              Total Confirmed Cases
-            </Text>
-            <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
-              {localData.total_cases_count}
-            </Text>
-            <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
-              Deaths
-            </Text>
-            <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
-              {dataFromApi.local_deaths}
-            </Text>
-            <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
-              Recoverd
-            </Text>
-            <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
-              {dataFromApi.local_recovered}
-            </Text>
-          </View>
+        {dailyCasesToggle ? (
+          <DailyCases localData={localData} />
+        ) : (
+          <TotalCases localData={localData} dataFromApi={dataFromApi} />
         )}
       </Animated.View>
     </View>
