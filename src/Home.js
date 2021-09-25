@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Text, TouchableOpacity, View, Animated } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import tailwind from "tailwind-rn";
 import axios from "axios";
 
@@ -10,6 +11,23 @@ export default function Home() {
   const [dataFromApi, setData] = useState({});
   const [localData, setLocalData] = useState({});
   const [dailyCasesToggle, setDailyCasesToggle] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get("https://hpb.health.gov.lk/api/get-statistical-history-data")
+      .then((res) => {
+        setLocalData({ ...res.data.data[0] });
+        // console.log(localData);
+      })
+      .catch((err) => console.log("localData Error: ", err));
+    axios
+      .get("https://www.hpb.health.gov.lk/api/get-current-statistical")
+      .then((response) => {
+        setData({ ...response.data.data });
+        // console.log(dataFromApi);
+      })
+      .catch((err) => console.log("dataFromApi Error: ", err));
+  }, []);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
@@ -50,22 +68,6 @@ export default function Home() {
     // fadeIn();
   }
 
-  useEffect(() => {
-    axios
-      .get("https://hpb.health.gov.lk/api/get-statistical-history-data")
-      .then((res) => {
-        setLocalData({ ...res.data.data[0] });
-        // console.log(localData);
-      })
-      .catch((err) => console.log("localData Error: ", err));
-    axios
-      .get("https://www.hpb.health.gov.lk/api/get-current-statistical")
-      .then((response) => {
-        setData({ ...response.data.data });
-        // console.log(dataFromApi);
-      })
-      .catch((err) => console.log("dataFromApi Error: ", err));
-  }, []);
   return (
     <View style={tailwind("items-center justify-center")}>
       {/* ---- Case Toggle ---- */}
@@ -82,8 +84,13 @@ export default function Home() {
           )}
           onPress={() => dailyCasePress()}
         >
-          <View>
+          <View style={tailwind("items-center justify-center")}>
             <Text style={{ fontFamily: "PoppinsMedium" }}>Daily Cases</Text>
+            <MaterialCommunityIcons
+              name={dailyCasesToggle ? "virus" : "virus-outline"}
+              size={24}
+              color="black"
+            />
           </View>
         </TouchableOpacity>
         <TouchableOpacity
@@ -94,8 +101,13 @@ export default function Home() {
           )}
           onPress={() => totalCasePress()}
         >
-          <View>
+          <View style={tailwind("items-center justify-center")}>
             <Text style={{ fontFamily: "PoppinsMedium" }}>Total Cases</Text>
+            <MaterialCommunityIcons
+              name={!dailyCasesToggle ? "virus" : "virus-outline"}
+              size={24}
+              color="black"
+            />
           </View>
         </TouchableOpacity>
       </View>
@@ -109,7 +121,7 @@ export default function Home() {
         ]}
       >
         {dailyCasesToggle ? (
-          <DailyCases localData={localData} />
+          <DailyCases localData={localData} dataFromApi={dataFromApi} />
         ) : (
           <TotalCases localData={localData} dataFromApi={dataFromApi} />
         )}

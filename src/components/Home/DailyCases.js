@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text } from "react-native";
 import tailwind from "tailwind-rn";
 
-const DailyCases = ({ localData }) => {
+const DailyCases = ({ localData, dataFromApi }) => {
   return (
     <View style={tailwind("items-center justify-center")}>
       <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
@@ -15,7 +15,7 @@ const DailyCases = ({ localData }) => {
         Deaths
       </Text>
       <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
-        {localData.deaths_count}
+        {dataFromApi.local_new_deaths}
       </Text>
       <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
         Recoverd
