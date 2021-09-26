@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Text } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -15,7 +16,26 @@ import BackButton from "./src/components/buttons/BackButton";
 const Stack = createNativeStackNavigator();
 
 function App() {
-  const [loaded, error] = useFonts({
+  const [dataFromApi, setData] = useState({});
+  const [localData, setLocalData] = useState({});
+  useEffect(() => {
+    axios
+      .get("https://hpb.health.gov.lk/api/get-statistical-history-data")
+      .then((res) => {
+        setLocalData({ ...res.data.data[0] });
+        // console.log(localData);
+      })
+      .catch((err) => console.log("localData Error: ", err));
+    axios
+      .get("https://www.hpb.health.gov.lk/api/get-current-statistical")
+      .then((response) => {
+        setData({ ...response.data.data });
+        // console.log(dataFromApi);
+      })
+      .catch((err) => console.log("dataFromApi Error: ", err));
+  }, []);
+
+  const [loaded] = useFonts({
     PoppinsThin: require("./assets/Poppins/Poppins-Thin.ttf"),
     // 100 PoppinsThin
 
@@ -78,7 +98,9 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen
-          children={() => <Home />}
+          children={() => (
+            <Home localData={localData} dataFromApi={dataFromApi} />
+          )}
           name="Home"
           options={{
             headerTitle: () => (

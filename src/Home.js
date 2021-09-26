@@ -1,70 +1,49 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { Text, TouchableOpacity, View, Animated } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import tailwind from "tailwind-rn";
-import axios from "axios";
 
 import DailyCases from "./components/Home/DailyCases";
 import TotalCases from "./components/Home/TotalCases";
 
-export default function Home() {
-  const [dataFromApi, setData] = useState({});
-  const [localData, setLocalData] = useState({});
+export default function Home({ dataFromApi, localData }) {
   const [dailyCasesToggle, setDailyCasesToggle] = useState(true);
 
-  useEffect(() => {
-    axios
-      .get("https://hpb.health.gov.lk/api/get-statistical-history-data")
-      .then((res) => {
-        setLocalData({ ...res.data.data[0] });
-        // console.log(localData);
-      })
-      .catch((err) => console.log("localData Error: ", err));
-    axios
-      .get("https://www.hpb.health.gov.lk/api/get-current-statistical")
-      .then((response) => {
-        setData({ ...response.data.data });
-        // console.log(dataFromApi);
-      })
-      .catch((err) => console.log("dataFromApi Error: ", err));
-  }, []);
-
-  const fadeAnim = useRef(new Animated.Value(0)).current;
-
-  const fadeOut = () => {
-    // Will change fadeAnim value to 0 in 3 seconds
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 3000,
-      useNativeDriver: true,
-    }).start(() => setDailyCasesToggle(!dailyCasesToggle));
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 3000,
-      useNativeDriver: true,
-    }).start();
-  };
-  const fadeIn = () => {
-    // Will change fadeAnim value to 0 in 3 seconds
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 5000,
-      useNativeDriver: true,
-    }).start();
-  };
+  // const fadeAnim = useRef(new Animated.Value(0)).current;
+  // const fadeOut = () => {
+  //   // Will change fadeAnim value to 0 in 3 seconds
+  //   Animated.timing(fadeAnim, {
+  //     toValue: 1,
+  //     duration: 3000,
+  //     useNativeDriver: true,
+  //   }).start();
+  //   Animated.timing(fadeAnim, {
+  //     toValue: 1,
+  //     duration: 3000,
+  //     useNativeDriver: true,
+  //   }).start();
+  // };
+  // const fadeIn = () => {
+  //   // Will change fadeAnim value to 0 in 3 seconds
+  //   Animated.timing(fadeAnim, {
+  //     toValue: 1,
+  //     duration: 5000,
+  //     useNativeDriver: true,
+  //   }).start();
+  // };
 
   function dailyCasePress() {
-    // setDailyCasesToggle(true);
+    setDailyCasesToggle(true);
 
     // Animation
-    fadeOut();
+    // fadeOut();
     // fadeIn();
   }
   function totalCasePress() {
-    // setDailyCasesToggle(false);
+    setDailyCasesToggle(false);
 
     // Animation
-    fadeOut();
+    // fadeOut();
     // fadeIn();
   }
 
@@ -117,7 +96,7 @@ export default function Home() {
           tailwind(
             "mt-4 flex flex-row items-center justify-center bg-gray-300 w-3/4 h-64 rounded-xl"
           ),
-          { opacity: fadeAnim },
+          // { opacity: fadeAnim },
         ]}
       >
         {dailyCasesToggle ? (
