@@ -1,11 +1,13 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { View, Text } from "react-native";
 import tailwind from "tailwind-rn";
 
-export default function About() {
+const MoreLocalData = () => {
   return (
     <View style={tailwind("items-center justify-center")}>
-      <Text>About.js</Text>
+      <Text>MoreLocalData</Text>
     </View>
   );
-}
+};
+
+export default MoreLocalData;

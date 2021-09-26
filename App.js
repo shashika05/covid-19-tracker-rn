@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Text, View } from "react-native";
+import { Text, View, Platform } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
@@ -10,6 +10,8 @@ import { MaterialIcons } from "@expo/vector-icons";
 // Screen's
 import Home from "./src/Home";
 import About from "./src/About";
+import MoreLocalData from "./src/MoreLocalData";
+import MoreWorldData from "./src/MoreWorldData";
 
 // Components/Buttons
 import AboutButton from "./src/components/buttons/AboutButton";
@@ -117,7 +119,10 @@ function App() {
                   name="coronavirus"
                   size={21}
                   color="black"
-                  style={{ margin: -3, paddingBottom: 3 }}
+                  style={{
+                    margin: -3,
+                    paddingBottom: Platform.OS === "android" ? 3 : 0,
+                  }}
                 />
                 <Text style={{ fontFamily: "PoppinsMedium", fontSize: 20 }}>
                   VID-19 Tracker
@@ -135,10 +140,90 @@ function App() {
             headerLeft: () => <BackButton />,
             headerTitleAlign: "center",
             headerTitle: () => (
-              <Text style={{ fontFamily: "PoppinsMedium", fontSize: 18 }}>
-                About
-              </Text>
+              <View
+                style={tailwind("flex flex-row items-center justify-center")}
+              >
+                <Text style={{ fontFamily: "PoppinsMedium", fontSize: 20 }}>
+                  Ab
+                </Text>
+                <MaterialIcons
+                  name="coronavirus"
+                  size={14}
+                  color="black"
+                  style={{
+                    margin: -2,
+                    paddingTop: Platform.OS === "android" ? 0 : 2,
+                    paddingBottom: Platform.OS === "android" ? 2 : 0,
+                  }}
+                />
+                <Text style={{ fontFamily: "PoppinsMedium", fontSize: 20 }}>
+                  ut
+                </Text>
+              </View>
             ),
+            headerBackVisible: false,
+          }}
+        />
+        <Stack.Screen
+          children={() => <MoreLocalData />}
+          name="MoreLocalData"
+          options={{
+            headerLeft: () => <BackButton />,
+            headerTitleAlign: "center",
+            headerTitle: () => (
+              <View
+                style={tailwind("flex flex-row items-center justify-center")}
+              >
+                <Text style={{ fontFamily: "PoppinsMedium", fontSize: 20 }}>
+                  L
+                </Text>
+                <MaterialIcons
+                  name="coronavirus"
+                  size={14}
+                  color="black"
+                  style={{
+                    margin: -2,
+                    paddingTop: Platform.OS === "android" ? 0 : 2,
+                    paddingBottom: Platform.OS === "android" ? 2 : 0,
+                  }}
+                />
+                <Text style={{ fontFamily: "PoppinsMedium", fontSize: 20 }}>
+                  cal Data
+                </Text>
+              </View>
+            ),
+            headerBackVisible: false,
+          }}
+        />
+        <Stack.Screen
+          children={() => <MoreWorldData />}
+          name="MoreWorldData"
+          options={{
+            headerLeft: () => <BackButton />,
+            headerTitleAlign: "center",
+            headerTitle: () => (
+              <View
+                style={tailwind("flex flex-row items-center justify-center")}
+              >
+                <Text style={{ fontFamily: "PoppinsMedium", fontSize: 20 }}>
+                  W
+                </Text>
+                <MaterialIcons
+                  name="coronavirus"
+                  size={14}
+                  color="black"
+                  style={{
+                    margin: -2,
+                    paddingTop: Platform.OS === "android" ? 0 : 2,
+                    paddingBottom: Platform.OS === "android" ? 2 : 0,
+                  }}
+                />
+                <Text style={{ fontFamily: "PoppinsMedium", fontSize: 20 }}>
+                  rld Data
+                </Text>
+              </View>
+            ),
+            headerBackVisible: false,
           }}
         />
       </Stack.Navigator>

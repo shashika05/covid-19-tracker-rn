@@ -7,6 +7,7 @@ import Loading from "../../Loading";
 const WTotalCases = () => {
   const [worldData, setWorldData] = useState({});
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     axios
       .get("https://coronavirus-19-api.herokuapp.com/countries")
@@ -17,6 +18,11 @@ const WTotalCases = () => {
       })
       .catch((err) => console.log("dataFromApi Error: ", err));
   }, []);
+
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   return loading ? (
     <Loading />
   ) : (
@@ -25,19 +31,19 @@ const WTotalCases = () => {
         Total Confirmed Cases
       </Text>
       <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
-        {worldData.cases}
+        {numberWithCommas(worldData.cases)}
       </Text>
       <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
         Deaths
       </Text>
       <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
-        {worldData.deaths}
+        {numberWithCommas(worldData.deaths)}
       </Text>
       <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
         Recoverd
       </Text>
       <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
-        {worldData.recovered}
+        {numberWithCommas(worldData.recovered)}
       </Text>
     </View>
   );

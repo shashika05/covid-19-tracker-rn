@@ -11,6 +11,7 @@ const DailyCases = () => {
   const [loading2, setLoading2] = useState(true);
   const [dataFromApi, setData] = useState({});
   const [localData, setLocalData] = useState({});
+
   useEffect(() => {
     axios
       .get("https://hpb.health.gov.lk/api/get-statistical-history-data")
@@ -29,6 +30,11 @@ const DailyCases = () => {
       })
       .catch((err) => console.log("dataFromApi Error: ", err));
   }, []);
+
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   return loading1 || loading2 ? (
     <Loading />
   ) : (
@@ -37,19 +43,19 @@ const DailyCases = () => {
         New Cases
       </Text>
       <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
-        {localData.cases_count}
+        {numberWithCommas(localData.cases_count)}
       </Text>
       <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
         Deaths
       </Text>
       <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
-        {dataFromApi.local_new_deaths}
+        {numberWithCommas(dataFromApi.local_new_deaths)}
       </Text>
       <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
         Recoverd
       </Text>
       <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
-        {localData.recoveries_count}
+        {numberWithCommas(localData.recoveries_count)}
       </Text>
     </View>
   );

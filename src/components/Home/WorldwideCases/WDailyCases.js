@@ -9,6 +9,7 @@ import Loading from "../../Loading";
 const WDailyCases = () => {
   const [worldData, setWorldData] = useState({});
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     axios
       .get("https://coronavirus-19-api.herokuapp.com/countries")
@@ -19,6 +20,11 @@ const WDailyCases = () => {
       })
       .catch((err) => console.log("setWorldData Error: ", err));
   }, []);
+
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   return loading ? (
     <Loading />
   ) : (
@@ -27,13 +33,13 @@ const WDailyCases = () => {
         New Cases
       </Text>
       <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
-        {worldData.todayCases}
+        {numberWithCommas(worldData.todayCases)}
       </Text>
       <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
         Deaths
       </Text>
       <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
-        {worldData.todayDeaths}
+        {numberWithCommas(worldData.todayDeaths)}
       </Text>
       {/* <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
         Recoverd

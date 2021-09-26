@@ -6,7 +6,8 @@ import {
   Animated,
   ScrollView,
 } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, FontAwesome5 } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/core";
 import tailwind from "tailwind-rn";
 
 // Local Cases
@@ -20,6 +21,8 @@ import WTotalCases from "./components/Home/WorldwideCases/WTotalCases";
 export default function Home({ dataFromApi, localData }) {
   const [localToggle, setLocalToggle] = useState(true);
   const [worldwideToggle, setWorldwideToggle] = useState(true);
+
+  const navigation = useNavigation();
 
   // const fadeAnim = useRef(new Animated.Value(0)).current;
   // const fadeOut = () => {
@@ -118,12 +121,25 @@ export default function Home({ dataFromApi, localData }) {
         ) : (
           <TotalCases localData={localData} dataFromApi={dataFromApi} />
         )}
+        {/* ---- More details button ---- */}
+        <TouchableOpacity
+          activeOpacity={0.8}
+          style={tailwind(
+            "items-center justify-center w-16 h-16 absolute bg-gray-400 -right-8 -bottom-4 rounded-2xl"
+          )}
+          onPress={() => navigation.navigate("MoreLocalData")}
+        >
+          <FontAwesome5 name="viruses" size={28} color="black" />
+          <Text style={{ fontFamily: "PoppinsLight", fontSize: 10 }}>
+            More..
+          </Text>
+        </TouchableOpacity>
       </Animated.View>
       {/* ---- Worldwide Cases */}
       <Text
         style={[tailwind("mt-2"), { fontFamily: "PoppinsBold", fontSize: 36 }]}
       >
-        Cases Worldwide
+        Worldwide Cases
       </Text>
       {/* ---- Worldwide Cases Toggle */}
       <View
@@ -175,6 +191,18 @@ export default function Home({ dataFromApi, localData }) {
         ]}
       >
         {worldwideToggle ? <WDailyCases /> : <WTotalCases />}
+        <TouchableOpacity
+          activeOpacity={0.8}
+          style={tailwind(
+            "items-center justify-center w-16 h-16 absolute bg-gray-400 -right-8 -bottom-4 rounded-2xl"
+          )}
+          onPress={() => navigation.navigate("MoreWorldData")}
+        >
+          <FontAwesome5 name="viruses" size={28} color="black" />
+          <Text style={{ fontFamily: "PoppinsLight", fontSize: 10 }}>
+            More..
+          </Text>
+        </TouchableOpacity>
       </Animated.View>
     </ScrollView>
   );
