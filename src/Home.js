@@ -1,13 +1,25 @@
 import React, { useState, useRef } from "react";
-import { Text, TouchableOpacity, View, Animated } from "react-native";
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  Animated,
+  ScrollView,
+} from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import tailwind from "tailwind-rn";
 
-import DailyCases from "./components/Home/DailyCases";
-import TotalCases from "./components/Home/TotalCases";
+// Local Cases
+import DailyCases from "./components/Home/LocalCases/DailyCases";
+import TotalCases from "./components/Home/LocalCases/TotalCases";
+
+// Worldwide Cases
+import WDailyCases from "./components/Home/WorldwideCases/WDailyCases";
+import WTotalCases from "./components/Home/WorldwideCases/WTotalCases";
 
 export default function Home({ dataFromApi, localData }) {
-  const [dailyCasesToggle, setDailyCasesToggle] = useState(true);
+  const [localToggle, setLocalToggle] = useState(true);
+  const [worldwideToggle, setWorldwideToggle] = useState(true);
 
   // const fadeAnim = useRef(new Animated.Value(0)).current;
   // const fadeOut = () => {
@@ -32,35 +44,43 @@ export default function Home({ dataFromApi, localData }) {
   //   }).start();
   // };
 
-  function dailyCasePress() {
-    setDailyCasesToggle(true);
+  function localTogglePress() {
+    setLocalToggle(!localToggle);
     // Animation - Need to implement
   }
-  function totalCasePress() {
-    setDailyCasesToggle(false);
+
+  function worldwideTogglePress() {
+    setWorldwideToggle(!worldwideToggle);
     // Animation - Need to implement
   }
 
   return (
-    <View style={tailwind("items-center justify-center")}>
-      {/* ---- Case Toggle ---- */}
+    <ScrollView
+      contentContainerStyle={tailwind("items-center justify-center pb-12")}
+    >
+      <Text
+        style={[tailwind("mt-2"), { fontFamily: "PoppinsBold", fontSize: 36 }]}
+      >
+        Local Cases
+      </Text>
+      {/* ---- Local Case Toggle ---- */}
       <View
         style={tailwind(
-          "flex flex-row items-center justify-center w-1/2 mt-8 h-16"
+          "flex flex-row items-center justify-center w-1/2 mt-0 h-16"
         )}
       >
         <TouchableOpacity
           style={tailwind(
             `${
-              dailyCasesToggle ? "bg-gray-400" : "bg-gray-300"
+              localToggle ? "bg-gray-400" : "bg-gray-300"
             } flex flex-row items-center justify-center h-16 w-1/2 rounded-l-xl`
           )}
-          onPress={() => dailyCasePress()}
+          onPress={() => localTogglePress()}
         >
           <View style={tailwind("items-center justify-center")}>
             <Text style={{ fontFamily: "PoppinsMedium" }}>Daily Cases</Text>
             <MaterialCommunityIcons
-              name={dailyCasesToggle ? "virus" : "virus-outline"}
+              name={localToggle ? "virus" : "virus-outline"}
               size={24}
               color="black"
             />
@@ -69,36 +89,93 @@ export default function Home({ dataFromApi, localData }) {
         <TouchableOpacity
           style={tailwind(
             `${
-              dailyCasesToggle ? "bg-gray-300" : "bg-gray-400"
+              localToggle ? "bg-gray-300" : "bg-gray-400"
             } flex flex-row items-center justify-center h-16 w-1/2 rounded-r-xl`
           )}
-          onPress={() => totalCasePress()}
+          onPress={() => localTogglePress()}
         >
           <View style={tailwind("items-center justify-center")}>
             <Text style={{ fontFamily: "PoppinsMedium" }}>Total Cases</Text>
             <MaterialCommunityIcons
-              name={!dailyCasesToggle ? "virus" : "virus-outline"}
+              name={!localToggle ? "virus" : "virus-outline"}
               size={24}
               color="black"
             />
           </View>
         </TouchableOpacity>
       </View>
-      {/* ---- View of toggle ---- */}
+      {/* ---- View of Local toggle ---- */}
       <Animated.View
         style={[
           tailwind(
-            "mt-4 flex flex-row items-center justify-center bg-gray-300 w-3/4 h-64 rounded-xl"
+            "mt-4 flex flex-row items-center justify-center bg-gray-300 w-3/4 rounded-xl py-4"
           ),
           // { opacity: fadeAnim },
         ]}
       >
-        {dailyCasesToggle ? (
+        {localToggle ? (
           <DailyCases localData={localData} dataFromApi={dataFromApi} />
         ) : (
           <TotalCases localData={localData} dataFromApi={dataFromApi} />
         )}
       </Animated.View>
-    </View>
+      {/* ---- Worldwide Cases */}
+      <Text
+        style={[tailwind("mt-2"), { fontFamily: "PoppinsBold", fontSize: 36 }]}
+      >
+        Cases Worldwide
+      </Text>
+      {/* ---- Worldwide Cases Toggle */}
+      <View
+        style={tailwind(
+          "flex flex-row items-center justify-center w-1/2 mt-0 h-16"
+        )}
+      >
+        <TouchableOpacity
+          style={tailwind(
+            `${
+              worldwideToggle ? "bg-gray-400" : "bg-gray-300"
+            } flex flex-row items-center justify-center h-16 w-1/2 rounded-l-xl`
+          )}
+          onPress={() => worldwideTogglePress()}
+        >
+          <View style={tailwind("items-center justify-center")}>
+            <Text style={{ fontFamily: "PoppinsMedium" }}>Daily Cases</Text>
+            <MaterialCommunityIcons
+              name={worldwideToggle ? "virus" : "virus-outline"}
+              size={24}
+              color="black"
+            />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={tailwind(
+            `${
+              worldwideToggle ? "bg-gray-300" : "bg-gray-400"
+            } flex flex-row items-center justify-center h-16 w-1/2 rounded-r-xl`
+          )}
+          onPress={() => worldwideTogglePress()}
+        >
+          <View style={tailwind("items-center justify-center")}>
+            <Text style={{ fontFamily: "PoppinsMedium" }}>Total Cases</Text>
+            <MaterialCommunityIcons
+              name={!worldwideToggle ? "virus" : "virus-outline"}
+              size={24}
+              color="black"
+            />
+          </View>
+        </TouchableOpacity>
+      </View>
+      <Animated.View
+        style={[
+          tailwind(
+            "mt-4 flex flex-row items-center justify-center bg-gray-300 w-3/4 rounded-xl py-4"
+          ),
+          // { opacity: fadeAnim },
+        ]}
+      >
+        {worldwideToggle ? <WDailyCases /> : <WTotalCases />}
+      </Animated.View>
+    </ScrollView>
   );
 }

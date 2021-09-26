@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
+
+import { MaterialIcons } from "@expo/vector-icons";
 
 // Screen's
 import Home from "./src/Home";
@@ -12,6 +14,7 @@ import About from "./src/About";
 // Components/Buttons
 import AboutButton from "./src/components/buttons/AboutButton";
 import BackButton from "./src/components/buttons/BackButton";
+import tailwind from "tailwind-rn";
 
 const Stack = createNativeStackNavigator();
 
@@ -104,9 +107,22 @@ function App() {
           name="Home"
           options={{
             headerTitle: () => (
-              <Text style={{ fontFamily: "PoppinsMedium", fontSize: 18 }}>
-                🦠 Covid-19 Tracker 🦠
-              </Text>
+              <View
+                style={tailwind("flex flex-row items-center justify-center")}
+              >
+                <Text style={{ fontFamily: "PoppinsMedium", fontSize: 20 }}>
+                  C
+                </Text>
+                <MaterialIcons
+                  name="coronavirus"
+                  size={21}
+                  color="black"
+                  style={{ margin: -3, paddingBottom: 3 }}
+                />
+                <Text style={{ fontFamily: "PoppinsMedium", fontSize: 20 }}>
+                  VID-19 Tracker
+                </Text>
+              </View>
             ),
             headerTitleAlign: "center",
             headerLeft: () => <AboutButton />,
