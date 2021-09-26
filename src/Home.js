@@ -34,17 +34,11 @@ export default function Home({ dataFromApi, localData }) {
 
   function dailyCasePress() {
     setDailyCasesToggle(true);
-
-    // Animation
-    // fadeOut();
-    // fadeIn();
+    // Animation - Need to implement
   }
   function totalCasePress() {
     setDailyCasesToggle(false);
-
-    // Animation
-    // fadeOut();
-    // fadeIn();
+    // Animation - Need to implement
   }
 
   return (
