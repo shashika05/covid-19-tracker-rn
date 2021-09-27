@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Image, ImageBackground } from "react-native";
 import axios from "axios";
 import tailwind from "tailwind-rn";
 
@@ -38,25 +38,45 @@ const MoreLocalData = () => {
   return loading1 || loading2 ? (
     <Loading />
   ) : (
-    <View style={tailwind("items-center justify-center")}>
-      <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
-        {numberWithCommas(localData.cases_count)}
-      </Text>
-      <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
-        New Cases
-      </Text>
-      <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
-        {numberWithCommas(dataFromApi.local_new_deaths)}
-      </Text>
-      <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
-        Deaths
-      </Text>
-      <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
-        {numberWithCommas(localData.recoveries_count)}
-      </Text>
-      <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
-        Recoverd
-      </Text>
+    <View
+      style={[
+        tailwind("items-center justify-center h-full"),
+        { backgroundColor: "#e3eaff" },
+      ]}
+    >
+      <ImageBackground
+        source={require("../assets/bg-1.png")}
+        style={[
+          tailwind("items-center justify-center h-full w-full"),
+          { flex: 1 },
+        ]}
+      >
+        <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
+          {numberWithCommas(localData.cases_count)}
+        </Text>
+        <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
+          New Cases
+        </Text>
+        <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
+          {numberWithCommas(dataFromApi.local_new_deaths)}
+        </Text>
+        <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
+          Deaths
+        </Text>
+        <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
+          {numberWithCommas(localData.recoveries_count)}
+        </Text>
+        <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
+          Recoverd
+        </Text>
+        {/* <Image
+        source={require("../assets/safe-mask-bg.png")}
+        style={[
+          tailwind("w-72 absolute"),
+          { resizeMode: "cover", width: "auto", height: 100 },
+        ]}
+      /> */}
+      </ImageBackground>
     </View>
   );
 };
