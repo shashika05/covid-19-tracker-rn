@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import axios from "axios";
 import tailwind from "tailwind-rn";
-import Loading from "../../Loading";
+
+//Loading
+import Loading from "../../../Loading";
 
 const WTotalCases = () => {
   const [worldData, setWorldData] = useState({});
@@ -27,23 +29,23 @@ const WTotalCases = () => {
     <Loading />
   ) : (
     <View style={tailwind("items-center justify-center")}>
-      <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
-        Total Confirmed Cases
-      </Text>
       <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
         {numberWithCommas(worldData.cases)}
       </Text>
       <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
-        Deaths
+        Total Confirmed Cases
       </Text>
       <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
         {numberWithCommas(worldData.deaths)}
       </Text>
       <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
-        Recoverd
+        Deaths
       </Text>
       <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
         {numberWithCommas(worldData.recovered)}
+      </Text>
+      <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
+        Recoverd
       </Text>
     </View>
   );

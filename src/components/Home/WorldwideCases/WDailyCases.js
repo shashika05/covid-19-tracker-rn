@@ -4,7 +4,7 @@ import axios from "axios";
 import tailwind from "tailwind-rn";
 
 //Loading
-import Loading from "../../Loading";
+import Loading from "../../../Loading";
 
 const WDailyCases = () => {
   const [worldData, setWorldData] = useState({});
@@ -29,17 +29,17 @@ const WDailyCases = () => {
     <Loading />
   ) : (
     <View style={tailwind("items-center justify-center")}>
-      <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
-        New Cases
-      </Text>
       <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
         {numberWithCommas(worldData.todayCases)}
       </Text>
       <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
-        Deaths
+        New Cases
       </Text>
       <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
         {numberWithCommas(worldData.todayDeaths)}
+      </Text>
+      <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
+        Deaths
       </Text>
       {/* <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
         Recoverd

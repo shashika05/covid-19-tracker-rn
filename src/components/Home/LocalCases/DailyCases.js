@@ -4,7 +4,7 @@ import axios from "axios";
 import tailwind from "tailwind-rn";
 
 //Loading
-import Loading from "../../Loading";
+import Loading from "../../../Loading";
 
 const DailyCases = () => {
   const [loading1, setLoading1] = useState(true);
@@ -39,23 +39,23 @@ const DailyCases = () => {
     <Loading />
   ) : (
     <View style={tailwind("items-center justify-center")}>
-      <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
-        New Cases
-      </Text>
       <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
         {numberWithCommas(localData.cases_count)}
       </Text>
       <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
-        Deaths
+        New Cases
       </Text>
       <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
         {numberWithCommas(dataFromApi.local_new_deaths)}
       </Text>
       <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
-        Recoverd
+        Deaths
       </Text>
       <Text style={{ fontFamily: "PoppinsLight", fontSize: 32 }}>
         {numberWithCommas(localData.recoveries_count)}
+      </Text>
+      <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
+        Recoverd
       </Text>
     </View>
   );

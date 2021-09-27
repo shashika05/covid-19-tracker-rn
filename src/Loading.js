@@ -8,12 +8,12 @@ export default function Loading() {
     <View style={tailwind("justify-center items-center")}>
       <LottieView
         style={tailwind("w-52 h-52")}
-        source={require("../../assets/loading2.json")}
+        source={require("../assets/loading2.json")}
         autoPlay
         loop
       />
       <Text style={{ fontFamily: "PoppinsLight", fontSize: 16 }}>
-        Loading..
+        Wash your Hands..
       </Text>
     </View>
   );
